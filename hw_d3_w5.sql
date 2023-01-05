@@ -50,7 +50,7 @@ join city c2
 on a.city_id = c2.city_id
 join country c  
 on c2.country_id = c.country_id 
-where c.country = 'Argentina';
+where c.country = 'Argentina'; --works
 
 
 
@@ -63,39 +63,19 @@ from film_category fc
 join category c 
 on fc.category_id = c.category_id 
 group by fc.category_id, c."name" 
-order by num_movies_in_cat desc; 
+order by num_movies_in_cat desc; --works
 
 6. What film had the most actors in it (show film info)?
 
 select 
 
-select fa.actor_id, count (*) as num_actors
+select fa.film_id, f.title, count (*) as num_actors
 from film_actor fa
-group by fa.actor_id;
-
--- get the number of each film's actors
-select fa.film_id, count (*) as num_actors
-from film_actor fa
-group by fa.film_id; -- best bet
-
---find the max actors
-select max(num_actors)
-from(
-
-select fa.film_id, c."name", count (*) as num_actors
-from film_actor fa
-join category c 
-group by fa.film_id
+join film f  
+on fa.film_id = f.film_id  
+group by fa.film_id, f.title  
 order by num_actors desc
-limit 1;
-
-) as most_actors_in_film; -----best bet
-
-select fa.film_id, count (*) as num_actors
-from film_actor fa
-group by fa.film_id
-order by num_actors desc
-limit 1;
+limit 1; --works
 
 
 --find the film id for the max actors
